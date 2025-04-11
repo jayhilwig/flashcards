@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap");
+/* Remove the Google Fonts import that was causing the error */
+/* @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"); */
 
 @tailwind base;
 @tailwind components;
@@ -74,7 +75,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "Outfit", sans-serif;
+    font-family: var(--font-outfit), sans-serif;
   }
 }
 
@@ -82,4 +83,3 @@
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
-

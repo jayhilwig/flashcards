@@ -18,7 +18,7 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ["Outfit", "sans-serif"],
+        sans: ["var(--font-outfit)"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -80,4 +80,3 @@ const config: Config = {
 }
 
 export default config
-

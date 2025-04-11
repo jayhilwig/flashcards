@@ -300,4 +300,3 @@ export default function FlashCard({ card, isFlipped, setIsFlipped, onNext, onPre
     </div>
   )
 }
-

@@ -6,19 +6,30 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import FlashCard from "@/components/flash-card"
-import { flashCardData } from "@/lib/data"
+import { flashCardData, getFlattenedFlashCardData } from "@/lib/data"
 
 export default function Home() {
   const [currentCardIndex, setCurrentCardIndex] = useState(0)
   const [currentCategory, setCurrentCategory] = useState("all")
-  const [filteredCards, setFilteredCards] = useState(flashCardData)
+  const [filteredCards, setFilteredCards] = useState(getFlattenedFlashCardData())
   const [isFlipped, setIsFlipped] = useState(false)
 
   useEffect(() => {
     if (currentCategory === "all") {
-      setFilteredCards(flashCardData)
+      setFilteredCards(getFlattenedFlashCardData())
     } else {
-      setFilteredCards(flashCardData.filter((card) => card.category === currentCategory))
+      const categoryData = flashCardData.find((cat) => cat.name === currentCategory)
+      if (categoryData) {
+        // Add category to each card for compatibility with the FlashCard component
+        setFilteredCards(
+          categoryData.cards.map((card) => ({
+            ...card,
+            category: categoryData.name,
+          })),
+        )
+      } else {
+        setFilteredCards([])
+      }
     }
     setCurrentCardIndex(0)
     setIsFlipped(false)
@@ -84,7 +95,7 @@ export default function Home() {
               href="https://www.shapeof.ai/"
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-2 text-gray-500 hover:text-gray-700"
+              className="ml-2 text-blue-600 hover:text-blue-800"
             >
               <ExternalLink size={18} />
             </a>
@@ -93,46 +104,46 @@ export default function Home() {
         </div>
 
         <Tabs defaultValue="all" className="w-full" onValueChange={setCurrentCategory}>
-          <TabsList className="grid grid-cols-2 md:grid-cols-7 mb-6">
+          <TabsList className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-7 mb-8 md:mb-6 gap-1">
             <TabsTrigger
               value="all"
-              className="bg-gray-200 data-[state=active]:bg-gray-500 data-[state=active]:text-white"
+              className="bg-gray-200 data-[state=active]:bg-gray-500 data-[state=active]:text-white text-xs sm:text-sm"
             >
               All
             </TabsTrigger>
             <TabsTrigger
               value="wayfinders"
-              className="bg-purple-100 data-[state=active]:bg-purple-500 data-[state=active]:text-white"
+              className="bg-purple-100 data-[state=active]:bg-purple-500 data-[state=active]:text-white text-xs sm:text-sm"
             >
               Wayfinders
             </TabsTrigger>
             <TabsTrigger
               value="inputs"
-              className="bg-sky-100 data-[state=active]:bg-sky-500 data-[state=active]:text-white"
+              className="bg-sky-100 data-[state=active]:bg-sky-500 data-[state=active]:text-white text-xs sm:text-sm"
             >
               Inputs
             </TabsTrigger>
             <TabsTrigger
               value="tuners"
-              className="bg-teal-100 data-[state=active]:bg-teal-500 data-[state=active]:text-white"
+              className="bg-teal-100 data-[state=active]:bg-teal-500 data-[state=active]:text-white text-xs sm:text-sm"
             >
               Tuners
             </TabsTrigger>
             <TabsTrigger
               value="governors"
-              className="bg-amber-100 data-[state=active]:bg-amber-500 data-[state=active]:text-white"
+              className="bg-amber-100 data-[state=active]:bg-amber-500 data-[state=active]:text-white text-xs sm:text-sm"
             >
               Governors
             </TabsTrigger>
             <TabsTrigger
               value="trust"
-              className="bg-orange-100 data-[state=active]:bg-orange-500 data-[state=active]:text-white"
+              className="bg-orange-100 data-[state=active]:bg-orange-500 data-[state=active]:text-white text-xs sm:text-sm"
             >
               Trust
             </TabsTrigger>
             <TabsTrigger
               value="identifiers"
-              className="bg-violet-100 data-[state=active]:bg-violet-500 data-[state=active]:text-white"
+              className="bg-violet-100 data-[state=active]:bg-violet-500 data-[state=active]:text-white text-xs sm:text-sm"
             >
               Identifiers
             </TabsTrigger>
@@ -265,4 +276,3 @@ export default function Home() {
     </main>
   )
 }
-
