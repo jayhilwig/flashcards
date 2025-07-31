@@ -43,13 +43,13 @@ import {
   AlertTriangle,
   Fingerprint,
   Palette,
+  ImageIcon,
+  ChevronLeft,
+  ChevronRight,
   FileWarning,
   MousePointer,
   User,
   UserCircle,
-  Image,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react"
 
 interface FlashCardProps {
@@ -138,7 +138,7 @@ export default function FlashCard({ card, isFlipped, setIsFlipped, onNext, onPre
     if (term === "tuners") return <Sliders className={`w-12 h-12 ${getCategoryTextColor(card.category)}`} />
     if (term === "governors") return <ShieldCheck className={`w-12 h-12 ${getCategoryTextColor(card.category)}`} />
     if (term === "trust indicators")
-      return <Fingerprint className={`w-12 h-12 ${getCategoryTextColor(card.category)}`} />
+      return <ShieldCheck className={`w-12 h-12 ${getCategoryTextColor(card.category)}`} />
     if (term === "dark matter") return <AlertTriangle className={`w-12 h-12 ${getCategoryTextColor(card.category)}`} />
     if (term === "identifiers") return <Fingerprint className={`w-12 h-12 ${getCategoryTextColor(card.category)}`} />
 
@@ -198,7 +198,7 @@ export default function FlashCard({ card, isFlipped, setIsFlipped, onNext, onPre
     if (term === "initial cta") return <MousePointer className={`w-10 h-10 ${getCategoryTextColor(card.category)}`} />
     if (term === "name") return <User className={`w-10 h-10 ${getCategoryTextColor(card.category)}`} />
     if (term === "personality") return <UserCircle className={`w-10 h-10 ${getCategoryTextColor(card.category)}`} />
-    if (term === "symbols") return <Image className={`w-10 h-10 ${getCategoryTextColor(card.category)}`} />
+    if (term === "symbols") return <ImageIcon className={`w-10 h-10 ${getCategoryTextColor(card.category)}`} />
 
     // Default
     return null
@@ -206,7 +206,8 @@ export default function FlashCard({ card, isFlipped, setIsFlipped, onNext, onPre
 
   // Check if this is a main topic card (term matches category name)
   const isMainTopic =
-    card.term.toLowerCase() === card.category.toLowerCase() || card.term === getCategoryName(card.category)
+    card.term.toLowerCase() === card.category.toLowerCase() ||
+    card.term.toLowerCase() === getCategoryName(card.category).toLowerCase()
 
   // Handle click on left third of card
   const handleLeftClick = (e: React.MouseEvent) => {
